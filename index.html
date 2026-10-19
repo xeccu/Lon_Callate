@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>¡Lon, cállate! La experiencia definitiva de silencio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Schibsted+Grotesk:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#ffe03d;--ink:#1b25c9;--pop:#1b25c9;--pop-ink:#ffe03d;--mut:#3b44b5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1033;--ink:#ffe03d;--pop:#ffe03d;--pop-ink:#0e1033;--mut:#d2c987}}
+:root[data-theme="dark"]{--bg:#0e1033;--ink:#ffe03d;--pop:#ffe03d;--pop-ink:#0e1033;--mut:#d2c987}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Schibsted Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
+h1,h2,.n,.shh,.pop{font-family:"Bowlby One","Arial Black",Impact,sans-serif;font-weight:400;margin:0}
+button{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible{outline:3px solid currentColor;outline-offset:3px}
+.tick{background:var(--pop);color:var(--pop-ink);overflow:hidden;white-space:nowrap;padding:9px 0;font-weight:600}
+.tick span{display:inline-block;padding-left:100%;animation:mq 80s linear infinite}
+@keyframes mq{to{transform:translateX(-100%)}}
+main{max-width:880px;margin:0 auto;padding:0 18px 40px}
+h1{font-size:clamp(68px,21vw,190px);line-height:.88;letter-spacing:-.03em;padding:34px 0 10px}
+.sub{max-width:520px;color:var(--mut);margin:8px 0 18px}
+h2{font-size:clamp(28px,6.5vw,44px);line-height:1.05;margin:0 0 14px}
+section{border-top:3px solid var(--ink);padding:26px 0 30px}
+.game{background:var(--pop);color:var(--pop-ink);border-radius:30px;padding:22px 18px;text-align:center;position:relative;overflow:hidden;margin:24px 0 30px}
+.lon{font-size:88px;line-height:1.1}
+.bub{display:inline-block;background:var(--pop-ink);color:var(--pop);border-radius:16px;padding:6px 14px;margin:6px 0 16px;min-height:36px}
+.meter{height:24px;border:3px solid var(--pop-ink);border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--pop-ink);transition:width .1s}
+.game p{margin:8px 0}
+.shh{display:block;width:100%;margin:14px 0 12px;padding:16px;font-size:clamp(30px,8vw,52px);background:var(--pop-ink);color:var(--pop);border:0;border-radius:22px;box-shadow:0 7px 0 rgba(0,0,0,.35);cursor:pointer}
+.shh:active{transform:translateY(6px);box-shadow:0 1px 0 rgba(0,0,0,.35)}
+.row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:center}
+.chip{background:none;border:2px solid currentColor;border-radius:99px;padding:4px 14px;cursor:pointer}
+.hint{font-size:14px;opacity:.8}
+.pop{position:absolute;left:50%;bottom:40%;font-size:26px;pointer-events:none;animation:up .9s forwards}
+@keyframes up{to{transform:translateY(-140px) rotate(-8deg);opacity:0}}
+.shake{animation:sh .25s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;padding:0;margin:0;list-style:none}
+.ach{border:2px dashed var(--mut);border-radius:12px;padding:10px;opacity:.55;filter:grayscale(1)}
+.ach.on{opacity:1;filter:none;border:2px solid var(--ink);background:var(--pop);color:var(--pop-ink)}
+.ach span{display:block;font-size:28px}
+.q{font-size:21px;min-height:68px;margin:0 0 12px;max-width:640px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:22px}
+.stats div{border-left:3px solid var(--ink);padding-left:14px}
+.n{display:block;font-size:clamp(40px,11vw,60px);line-height:1}
+.up{display:flex;align-items:center;gap:12px;border-bottom:2px solid var(--ink);padding:10px 0}
+.up>span{font-size:28px}
+.up div{flex:1}
+.up small{display:block;color:var(--mut)}
+.holes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:360px;margin:12px 0}
+.hole{height:68px;font-size:34px;background:none;border:3px solid var(--ink);border-radius:16px;cursor:pointer}
+#chat{height:170px;overflow-y:auto;border:3px solid var(--ink);padding:10px 12px;font-size:15px}
+#chat p{margin:0 0 6px}
+.id{border:3px solid var(--ink);padding:16px;max-width:420px;margin-bottom:14px}
+.id p{margin:4px 0}
+.lang{display:flex;justify-content:space-between;align-items:baseline;gap:12px;width:100%;background:none;border:0;border-bottom:2px solid var(--ink);padding:12px 2px;font-size:20px;font-weight:800;text-align:left;cursor:pointer}
+.lang small{color:var(--mut);font-size:15px;font-weight:400}
+.lang:hover{background:var(--pop);color:var(--pop-ink);padding-left:12px}
+.lang:hover small{color:inherit}
+#toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translate(-50%,200%);background:var(--pop);color:var(--pop-ink);padding:10px 18px;border-radius:14px;font-weight:600;transition:transform .25s;z-index:9;max-width:90vw;text-align:center}
+#toast.show{transform:translate(-50%,0)}
+footer{color:var(--mut);padding:10px 18px 36px;max-width:880px;margin:0 auto;font-size:14px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="tick" aria-hidden="true"><span id="tk"></span></div>
+<main>
+<h1>Lon,<br>cállate.</h1>
+<p class="sub">El único portal dedicado a neutralizar los decibelios de Lon. Pulsa, compra mejoras y salva a la humanidad del ruido infinito.</p>
+
+<div class="game" id="box">
+<div class="lon" id="lon">😶</div>
+<div class="bub" id="bub" aria-live="polite">Es que yo solo digo que…</div>
+<div class="meter"><i id="bar"></i></div>
+<p>Charla de Lon: <b id="pct">30</b>% · Aguantas: <b id="now">0</b> s</p>
+<button class="shh" id="btn">¡Lon, cállate!</button>
+<p>Decibelios reducidos: <b id="db">0</b> · Automático: <b id="sps">0</b> dB/s</p>
+<p>Rango: <b id="rk"></b></p>
+<div class="row"><span>Cállates: <b id="cnt">0</b></span><span>Récord: <b id="best">0 s</b></span><button class="chip" id="snd">🔊 Sonido</button></div>
+<p class="hint">Pulsa sin parar o usa la barra espaciadora. Si la barra llega al 100%, gana Lon.</p>
+</div>
+
+<section>
+<h2>Tienda anti-Lon</h2>
+<p class="sub">Invierte decibelios para callar a Lon automáticamente. Cada dB/s también frena su barra de charla.</p>
+<div id="shop"></div>
+</section>
+
+<section>
+<h2>Whack-a-Lon</h2>
+<p class="sub">Lon asoma por los agujeros. Pulsa antes de que se esconda: cada acierto son 10 puntos y cada punto se paga a 5 dB.</p>
+<p>Puntos: <b id="ws">0</b></p>
+<div class="holes" id="wh"></div>
+<button class="chip" id="wstart">Iniciar Whack-a-Lon</button>
+</section>
+
+<section>
+<h2>Logros desbloqueables</h2>
+<ul class="grid" id="ach"></ul>
+</section>
+
+<section>
+<h2>Lo que Lon diría ahora mismo</h2>
+<p class="q" id="q"></p>
+<div class="row" id="gq" style="justify-content:flex-start"><button class="chip" data-g="l">🎲 Frase de Lon</button><button class="chip" data-g="t">🕵️ Teoría conspirativa</button><button class="chip" data-g="e">📣 Excusa para callarle</button></div>
+</section>
+
+<section>
+<h2>Estadísticas inventadas (pero creíbles)</h2>
+<div class="stats">
+<div><b class="n">87%</b>de las conversaciones mejoran en cuanto Lon respira.</div>
+<div><b class="n">3 min</b>es lo que dura «una cosita nada más».</div>
+<div><b class="n">0</b>veces que Lon se ha callado a la primera.</div>
+</div>
+</section>
+
+<section>
+<h2>Cállate en 8 idiomas</h2>
+<p class="sub" style="margin-top:0">Toca una frase y tu navegador la dirá en voz alta.</p>
+<div id="lg"></div>
+</section>
+
+<section>
+<h2>Chat anti-Lon</h2>
+<p class="sub" style="margin-top:0">Usuarios inventados, opiniones sinceras.</p>
+<div id="chat"></div>
+</section>
+
+<section>
+<h2>Carnet de ciudadano libre de Lon</h2>
+<div class="id"><b>Pase de paz acústica</b>
+<p>Héroe <span id="hid"></span> · Rango: <span id="crank"></span></p>
+<p>Silencios aplicados: <b id="cdb">0</b> dB</p>
+<p>Estado de Lon: silenciado de por vida (mentira)</p>
+<small>Firma: Anti-Lon Squad · Oficial y verificado</small></div>
+<button class="chip" id="sh">📩 Mándaselo a Lon</button>
+</section>
+</main>
+<footer>© 2026 Instituto Internacional para la Reducción de Ruido de Lon. Ningún Lon fue dañado en la creación de esta página. Es de broma, Lon: te queremos, pero cállate un poquito.</footer>
+<div id="toast" role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+(()=>{
+const $=i=>document.getElementById(i),pick=a=>a[Math.random()*a.length|0],K="lon-callate-2",fmt=n=>Math.floor(n).toLocaleString("es-ES");
+let S={c:0,b:0,a:[],d:0,t:0,u:{},id:1000+(Math.random()*9000|0)};
+try{Object.assign(S,JSON.parse(localStorage.getItem(K)||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+let tt;const toast=m=>{const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2400)};
+const rm=matchMedia("(prefers-reduced-motion:reduce)").matches,conf=o=>{if(!rm)try{confetti(o)}catch(e){}};
+
+let ac,snd=true;
+const AC=()=>ac=ac||new(window.AudioContext||window.webkitAudioContext)();
+function shh(){if(!snd)return;try{const c=AC(),n=c.sampleRate*.3|0,b=c.createBuffer(1,n,c.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=b;f.type="bandpass";f.frequency.value=4500;g.gain.value=.3;s.connect(f);f.connect(g);g.connect(c.destination);s.start()}catch(e){}}
+function blip(a,b,t,d){if(!snd)return;try{const c=AC(),o=c.createOscillator(),g=c.createGain(),n=c.currentTime;o.type=t;o.frequency.setValueAtTime(a,n);o.frequency.exponentialRampToValueAtTime(b,n+d);g.gain.setValueAtTime(.2,n);g.gain.exponentialRampToValueAtTime(.01,n+d);o.connect(g);g.connect(c.destination);o.start();o.stop(n+d)}catch(e){}}
+
+$("tk").textContent=["Última hora: Lon empieza con «una cosita nada más» y aún no ha terminado","Estudio inventado: el 100% de los silencios incómodos son porque Lon piensa qué decir","Expertos recomiendan «cállate» como alternativa a «cuéntame más»","Lon bate su récord personal: 14 minutos sin respirar","Se busca botón de silenciar para Lon. Urgente. Recompensa: paz","Alerta nivel 5: Lon hablando"].join("   ✦   ");
+
+const R=["Novato de la paz","Inspector de murmullos","Bloqueador de Lon","Destructor de decibelios","Guardiana del silencio cósmico","Señor supremo mudo"],TH=[0,50,250,800,2000,5000],rank=()=>TH.filter(x=>S.t>=x).length-1;
+const U=[["tape","Cinta aislante digital",15,1,"🩹"],["mega","Megáfono inverso",100,8,"📣"],["deaf","Sordera selectiva",500,30,"🦻"],["cat","Gato que mira feo a Lon",2000,120,"🐱"],["bh","Agujero negro antirruido",10000,500,"🕳️"]];
+const cost=i=>Math.floor(U[i][2]*1.5**(S.u[U[i][0]]||0)),sps=()=>U.reduce((a,u)=>a+u[3]*(S.u[u[0]]||0),0);
+const A=[["c",1,"Primer cállate","🤫"],["c",50,"Domador de Lons","🦁"],["d",500,"Maestro muteador","🎚️"],["d",5000,"Lon en mute permanente","🔕"],["s",30,"30 s de paz","☮️"],["s",90,"Maestro zen","🏔️"]];
+
+const lon=$("lon"),bub=$("bub"),bar=$("bar"),box=$("box");
+let talk=30,t0=0,run=false;
+const faces=[[20,"🤐"],[45,"😶"],[70,"🗣️"],[90,"📢"],[101,"🤯"]],secs=()=>run?(Date.now()-t0)/1000:0;
+function draw(){bar.style.width=Math.min(talk,100)+"%";$("pct").textContent=Math.round(talk);lon.textContent=faces.find(f=>talk<f[0])[1];$("cnt").textContent=S.c;$("best").textContent=S.b+" s";$("now").textContent=Math.floor(secs());$("db").textContent=fmt(S.d);$("sps").textContent=sps();const r=R[rank()];$("rk").textContent=r;$("crank").textContent=r;$("cdb").textContent=fmt(S.t)}
+function ach(){$("ach").innerHTML=A.map(([k,n,name,ico])=>`<li class="ach${S.a.includes(k+n)?" on":""}"><span>${ico}</span>${name}</li>`).join("")}
+function unlock(){A.forEach(([k,n,name,ico])=>{const id=k+n;if(!S.a.includes(id)&&(k=="c"?S.c>=n:k=="d"?S.t>=n:secs()>=n)){S.a.push(id);save();toast("Logro: "+name+" "+ico);conf({particleCount:50,spread:80});ach()}})}
+
+function hit(){
+if(!run){run=true;t0=Date.now();talk=30}
+talk=Math.max(0,talk-9);S.c++;S.d++;S.t++;save();shh();
+bub.textContent=pick(["Pero si yo solo…","Vale, vale…","Una cosita nada más…","Me callo, me callo… (mentira)","Es que eso no es así…","¿Puedo terminar la frase?","mmmf mmmf mmmf","Esto es censura.","¡Lon intentó hablar y falló rotundamente!","Un gato miró mal a Lon y este guardó silencio."]);
+const p=document.createElement("span");p.className="pop";p.textContent=pick(["¡Shhh!","¡Calla!","🤫","¡Silencio! +1","¡Ya!"]);p.style.marginLeft=(Math.random()*160-80)+"px";box.appendChild(p);setTimeout(()=>p.remove(),900);
+box.classList.remove("shake");void box.offsetWidth;box.classList.add("shake");
+if(Math.random()<.15)conf({particleCount:25,spread:60,origin:{y:.6}});
+draw();unlock()}
+let k=0;
+setInterval(()=>{
+const p=sps()/10;if(p){S.d+=p;S.t+=p}
+if(++k%50==0)save();
+if(run){const s=secs();talk+=Math.max(0,6+s/4-sps()*.5)/10;
+if(talk>=100){run=false;talk=100;const r=Math.floor(s);if(r>S.b){S.b=r;save()}draw();$("now").textContent=r;bub.textContent="¡Lon ha hablado! Aguantaste "+r+" s.";toast("Lon gana esta ronda. Pulsa para la revancha.");return}}
+draw();unlock()},100);
+$("btn").onclick=hit;
+$("snd").onclick=e=>{snd=!snd;e.currentTarget.textContent=snd?"🔊 Sonido":"🔇 Mudo"};
+addEventListener("keydown",e=>{if(e.code=="Space"&&!/^(INPUT|BUTTON)$/.test(document.activeElement.tagName)){e.preventDefault();hit()}});
+
+function shop(){$("shop").innerHTML=U.map((u,i)=>`<div class="up"><span>${u[4]}</span><div><b>${u[1]}</b><small>+${u[3]} dB/s · Tienes: ${S.u[u[0]]||0}</small></div><button class="chip" data-i="${i}">${fmt(cost(i))} dB</button></div>`).join("")}
+$("shop").onclick=e=>{const b=e.target.closest("button");if(!b)return;const i=+b.dataset.i,u=U[i],c=cost(i);if(S.d>=c){S.d-=c;S.u[u[0]]=(S.u[u[0]]||0)+1;save();blip(440,880,"triangle",.2);shop();draw();toast("Fichado: "+u[1]+" "+u[4])}else toast("Te faltan "+fmt(c-S.d)+" dB")};
+
+let ws=0,wa=false,ah=-1;const holes=()=>document.querySelectorAll(".hole"),clr=()=>{holes().forEach(h=>h.textContent="");ah=-1};
+$("wh").innerHTML=[0,1,2,3,4,5].map(i=>`<button class="hole" data-i="${i}" aria-label="Agujero ${i+1}"></button>`).join("");
+$("wstart").onclick=()=>{if(wa)return;wa=true;ws=0;$("ws").textContent=0;$("wstart").textContent="¡En curso!";let r=0;const iv=setInterval(()=>{clr();ah=Math.random()*6|0;holes()[ah].textContent="🗣️";if(++r>15){clearInterval(iv);clr();wa=false;$("wstart").textContent="Jugar otra vez";S.d+=ws*5;S.t+=ws*5;save();toast("Whack-a-Lon: +"+ws*5+" dB")}},800)};
+$("wh").onclick=e=>{const b=e.target.closest(".hole");if(b&&wa&&+b.dataset.i===ah){ws+=10;$("ws").textContent=ws;blip(600,150,"square",.1);clr()}};
+
+const T=["Lon no habla por voluntad propia: funciona con un motor V8 que produce frases aleatorias.","Se rumorea que si Lon se calla 5 minutos seguidos, el espacio-tiempo colapsa.","Archivos desclasificados confirman que Lon es un experimento acústico de la NASA.","Lon consume 4000 palabras por minuto solo para mantener su aura verbal.","La atmósfera existe únicamente para transmitir las palabras de Lon."];
+const E=["Lon, hermano, hay un concurso de silencio ahí fuera y vas perdiendo.","Lon, ¿puedes poner tus cuerdas vocales en modo avión un segundo?","Lon, el médico dijo que si no te callas 10 minutos se te congela la lengua.","Lon, tu micrófono interno está acoplando con el universo.","Lon, por favor, activa la opción muda de tu voz."];
+const G={l:()=>"«"+pick(["Una cosa que no sabíais:","Yo es que ya lo dije en 2019:","No, pero escuchad:","Con todo el respeto:","Os cuento rápido:"])+" "+pick(["los atascos","por qué el pan de antes sabía mejor","un documental que vi a medias","mi primo, que sabe de todo","montar un armario sin instrucciones","los pájaros, que no existen","a qué hora se debería cenar","cómo se hace de verdad una tortilla"])+pick([". Y ahí lo dejo (mentira).",". Y eso es solo el principio.",". Y no me interrumpáis.",". Esta es la versión corta.",". Luego dicen que hablo mucho."])+"»<br><b>Lon, cállate.</b>",t:()=>"«"+pick(T)+"»",e:()=>pick(E)};
+$("gq").onclick=e=>{const b=e.target.closest("[data-g]");if(b)$("q").innerHTML=G[b.dataset.g]()};
+$("q").innerHTML=G.l();
+
+const L=[["Español","Lon, cállate","es-ES"],["Inglés","Lon, shut up","en-GB"],["Catalán","Lon, calla","ca-ES"],["Francés","Lon, tais-toi","fr-FR"],["Alemán","Lon, halt den Mund","de-DE"],["Italiano","Lon, zitto","it-IT"],["Portugués","Lon, cala a boca","pt-PT"],["Japonés","ロン、黙れ","ja-JP"]];
+$("lg").innerHTML=L.map((l,i)=>`<button class="lang" data-i="${i}">${l[1]}<small>${l[0]}</small></button>`).join("");
+$("lg").onclick=e=>{const b=e.target.closest(".lang");if(!b)return;const l=L[b.dataset.i];try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(l[1]);u.lang=l[2];speechSynthesis.speak(u)}catch(x){toast("Tu navegador no sabe hablar. Aprende de él, Lon.")}};
+
+const FU=["Pedro_AntiNoise","Clara_Mute","SilentKing99","NoMoreLon","Sofía_Paz","GatoEnojado","Carlos_ZeroDB"],FM=["¡Llevo 10 minutos en silencio gracias a este botón!","Lon intentó hablar hoy en el grupo y le enviamos esta página.","Compré el gato que mira feo y funciona de maravilla.","¡Por fin paz mental en mi vida!","Lon, si ves esto: por favor, cállate."];
+const chat=()=>{const p=document.createElement("p"),c=$("chat");p.innerHTML="<b>"+pick(FU)+":</b> "+pick(FM);c.appendChild(p);if(c.children.length>30)c.firstChild.remove();c.scrollTop=c.scrollHeight};
+chat();chat();setInterval(chat,4500);
+
+$("sh").onclick=async()=>{const d={title:"Lon, cállate.",text:"¡He reducido "+fmt(S.t)+" dB de ruido de Lon! Únete y haz callar a Lon aquí:",url:location.href};try{if(navigator.share){await navigator.share(d)}else{await navigator.clipboard.writeText(d.text+" "+d.url);toast("Texto copiado. Pásaselo a Lon.")}}catch(e){if(e.name!="AbortError")toast("No se pudo compartir. Copia el enlace a mano.")}};
+
+$("hid").textContent="#LON-"+S.id;
+shop();ach();draw();
+})();
+</script>
+</body>
+</html>
