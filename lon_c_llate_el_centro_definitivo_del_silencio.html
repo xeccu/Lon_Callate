@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡LON, CÁLLATE! - La Experiencia Definitiva de Silencio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        neonPink: '#ff007f',
+                        neonPurple: '#9d00ff',
+                        neonCyan: '#00f3ff',
+                        darkBg: '#0b0c10',
+                        cardBg: '#1f2833'
+                    },
+                    animation: {
+                        'pulse-fast': 'pulse 0.6s infinite',
+                        'bounce-short': 'bounce 0.5s 2',
+                        'spin-slow': 'spin 8s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Outfit:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0b0c10;
+            color: #e0e6ed;
+            overflow-x: hidden;
+        }
+        .font-title {
+            font-family: 'Black Ops One', cursive;
+        }
+        .neon-glow-pink {
+            text-shadow: 0 0 10px #ff007f, 0 0 20px #ff007f, 0 0 40px #ff007f;
+        }
+        .neon-glow-cyan {
+            text-shadow: 0 0 10px #00f3ff, 0 0 20px #00f3ff;
+        }
+        .box-glow {
+            box-shadow: 0 0 20px rgba(255, 0, 127, 0.4), inset 0 0 15px rgba(157, 0, 255, 0.3);
+        }
+        .box-glow-cyan {
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0c10;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #9d00ff;
+            border-radius: 4px;
+        }
+        .shake {
+            animation: shake 0.2s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-2px, 0, 0) rotate(-1deg); }
+            20%, 80% { transform: translate3d(4px, 0, 0) rotate(2deg); }
+            30%, 50%, 70% { transform: translate3d(-6px, 0, 0) rotate(-2deg); }
+            40%, 60% { transform: translate3d(6px, 0, 0) rotate(1deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-neonPink selection:text-white">
+
+    <!-- FX Audio Ambient Sound Indicator & Mute toggle -->
+    <div class="fixed top-4 right-4 z-50 flex items-center gap-3 bg-cardBg/80 backdrop-blur-md p-3 rounded-full border border-neonPurple/50 shadow-lg">
+        <button id="soundToggle" class="text-neonCyan hover:text-white transition flex items-center gap-2 px-2 text-sm font-bold">
+            <i class="fas fa-volume-up text-lg" id="soundIcon"></i>
+            <span id="soundText">AUDIO ON</span>
+        </button>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+
+        <!-- HEADER SECTION -->
+        <header class="text-center my-6 relative">
+            <div class="inline-block px-4 py-1 rounded-full bg-neonPink/20 text-neonPink text-xs font-bold tracking-widest uppercase mb-3 border border-neonPink/40">
+                <i class="fas fa-biohazard mr-1"></i> Alerta Nivel 5: Lon hablando
+            </div>
+            <h1 class="text-5xl sm:text-7xl font-black font-title tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-neonPink via-neonPurple to-neonCyan neon-glow-pink mb-2 uppercase">
+                ¡LON, CÁLLATE!
+            </h1>
+            <p class="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto">
+                El único portal digital dedicado a neutralizar los decibelios de Lon. Presiona el botón, compra mejoras y salva a la humanidad del ruido infinito.
+            </p>
+        </header>
+
+        <!-- DASHBOARD GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 my-8">
+
+            <!-- LEFT COLUMN: Lore, Excusas & Mini Live Chat -->
+            <div class="space-y-6">
+                
+                <!-- ARCHIVOS SECRETOS DE LON -->
+                <div class="bg-cardBg border border-neonPurple/30 rounded-2xl p-5 box-glow">
+                    <h2 class="text-xl font-bold text-neonCyan mb-3 flex items-center gap-2">
+                        <i class="fas fa-user-secret"></i> Archivos Secretos de Lon
+                    </h2>
+                    <p class="text-xs text-gray-400 mb-4">Teorías conspirativas generadas por IA de por qué Lon no puede mantener el silencio:</p>
+                    <div id="conspiracyBox" class="bg-darkBg/70 p-3 rounded-xl border border-gray-700 text-sm text-gray-300 italic mb-3 min-h-[70px] flex items-center justify-center text-center">
+                        "Cargando secreto gubernamental sobre los pulmones de Lon..."
+                    </div>
+                    <button onclick="generateConspiracy()" class="w-full py-2 bg-neonPurple/30 hover:bg-neonPurple/50 text-neonCyan border border-neonCyan/40 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
+                        <i class="fas fa-dice"></i> Revelar Nueva Teoría
+                    </button>
+                </div>
+
+                <!-- GENERADOR DE EXCUSAS -->
+                <div class="bg-cardBg border border-neonPink/30 rounded-2xl p-5">
+                    <h2 class="text-xl font-bold text-neonPink mb-3 flex items-center gap-2">
+                        <i class="fas fa-bullhorn"></i> Generador de Excusas
+                    </h2>
+                    <p class="text-xs text-gray-400 mb-3">Frases efectivas para decirle a Lon hoy:</p>
+                    <div id="excuseBox" class="bg-darkBg/70 p-3 rounded-xl border border-gray-700 text-sm font-semibold text-neonPink mb-3 text-center min-h-[50px] flex items-center justify-center">
+                        Presiona abajo para crear una excusa...
+                    </div>
+                    <button onclick="generateExcuse()" class="w-full py-2 bg-neonPink/20 hover:bg-neonPink/40 text-white border border-neonPink/40 rounded-xl text-xs font-bold transition">
+                        <i class="fas fa-magic"></i> Generar Excusa para Calla-Lon
+                    </button>
+                </div>
+
+                <!-- FEED DE COMENTARIOS EN VIVO -->
+                <div class="bg-cardBg border border-gray-800 rounded-2xl p-5 h-64 flex flex-col">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-ping"></span> Chat Global Anti-Lon
+                    </h3>
+                    <div id="chatBox" class="flex-1 overflow-y-auto space-y-2 pr-2 text-xs text-gray-300">
+                        <!-- Chat messages injected by JS -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- CENTER COLUMN: Main Button, Silence Counter & Popups -->
+            <div class="flex flex-col items-center justify-start space-y-6">
+
+                <!-- MAIN COUNTER CARD -->
+                <div class="w-full bg-cardBg border-2 border-neonPink rounded-3xl p-6 text-center box-glow relative overflow-hidden">
+                    <div class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1">
+                        Decibelios de Lon Reducidos
+                    </div>
+                    <div id="silenceCounter" class="text-5xl sm:text-6xl font-black font-title text-neonCyan my-1 tracking-tight">
+                        0
+                    </div>
+                    <div class="text-sm font-bold text-neonPink flex items-center justify-center gap-2">
+                        <i class="fas fa-tachometer-alt"></i> Rango: <span id="rankTitle" class="text-white">Novato de la Paz</span>
+                    </div>
+
+                    <!-- Auto Sps Info -->
+                    <div class="mt-3 text-xs text-gray-400 bg-darkBg/60 py-1.5 px-3 rounded-full inline-block border border-gray-800">
+                        Silencio Automático: <span id="spsCount" class="text-neonCyan font-bold">0</span> dB/segundo
+                    </div>
+                </div>
+
+                <!-- THE BIG "LON CÁLLATE" BUTTON -->
+                <div class="relative group my-4">
+                    <button id="bigSilenceBtn" class="w-64 h-64 sm:w-72 sm:h-72 rounded-full bg-gradient-to-tr from-neonPink via-neonPurple to-neonCyan p-1.5 shadow-[0_0_50px_rgba(255,0,127,0.6)] active:scale-95 hover:scale-105 transition-all duration-150 flex items-center justify-center focus:outline-none">
+                        <div class="w-full h-full bg-darkBg rounded-full flex flex-col items-center justify-center p-4 border-4 border-transparent group-hover:border-neonPink transition-all">
+                            <i class="fas fa-volume-mute text-6xl text-neonPink group-hover:text-neonCyan transition-colors duration-300 mb-2"></i>
+                            <span class="text-2xl sm:text-3xl font-black font-title text-white tracking-wider text-center leading-none">
+                                ¡CÁLLATE<br><span class="text-neonPink">LON!</span>
+                            </span>
+                            <span class="text-[10px] text-gray-400 mt-2 uppercase font-bold tracking-widest group-hover:text-white">Haz Clic para Mutear</span>
+                        </div>
+                    </button>
+                    <!-- Floating popups container -->
+                    <div id="clickEffectsContainer" class="absolute inset-0 pointer-events-none"></div>
+                </div>
+
+                <!-- RECENT RESPONSE BANNER -->
+                <div id="lastActionText" class="text-sm font-bold text-neonCyan bg-cardBg/90 px-4 py-2 rounded-full border border-neonCyan/30 text-center min-h-[38px] flex items-center justify-center shadow-md">
+                    ¡Toca el botón gigante para hacer callar a Lon!
+                </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: Upgrades Shop & Mini Games Toggle -->
+            <div class="space-y-6">
+
+                <!-- TAB SWITCHER FOR SHOP vs MINIGAMES -->
+                <div class="flex bg-cardBg p-1 rounded-xl border border-gray-800">
+                    <button id="tabShop" onclick="switchRightTab('shop')" class="flex-1 py-2 text-xs font-bold rounded-lg bg-neonPurple text-white transition">
+                        <i class="fas fa-shopping-cart mr-1"></i> Tienda
+                    </button>
+                    <button id="tabGames" onclick="switchRightTab('games')" class="flex-1 py-2 text-xs font-bold rounded-lg text-gray-400 hover:text-white transition">
+                        <i class="fas fa-gamepad mr-1"></i> Minijuegos
+                    </button>
+                </div>
+
+                <!-- TAB CONTENT 1: UPGRADES SHOP -->
+                <div id="shopSection" class="bg-cardBg border border-neonPurple/30 rounded-2xl p-5 box-glow">
+                    <h2 class="text-lg font-bold text-white mb-1 flex items-center gap-2">
+                        <i class="fas fa-store text-neonPink"></i> Tienda Anti-Lon
+                    </h2>
+                    <p class="text-xs text-gray-400 mb-4">Invierte puntos para callar a Lon automáticamente.</p>
+
+                    <div class="space-y-3" id="upgradesList">
+                        <!-- Upgrades rendered dynamically via JS -->
+                    </div>
+                </div>
+
+                <!-- TAB CONTENT 2: MINIGAMES -->
+                <div id="gamesSection" class="hidden space-y-6">
+                    
+                    <!-- GAME 1: WHACK-A-LON -->
+                    <div class="bg-cardBg border border-neonCyan/30 rounded-2xl p-5 box-glow-cyan">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-bold text-neonCyan text-sm flex items-center gap-1">
+                                <i class="fas fa-ghost"></i> Whack-a-Lon
+                            </h3>
+                            <span id="whackScore" class="text-xs font-bold text-neonPink">Puntos: 0</span>
+                        </div>
+                        <p class="text-[11px] text-gray-400 mb-3">Lon intentará hablar en los círculos. ¡Haz clic para silenciarlo antes de que hable!</p>
+                        
+                        <div class="grid grid-cols-3 gap-2 bg-darkBg p-3 rounded-xl border border-gray-800" id="whackGrid">
+                            <!-- 6 Holes for Whack a Lon -->
+                            <div class="whack-hole h-16 bg-cardBg/80 rounded-lg flex items-center justify-center cursor-pointer border border-gray-700 hover:border-neonCyan transition" onclick="hitLon(0)"></div>
+                            <div class="whack-hole h-16 bg-cardBg/80 rounded-lg flex items-center justify-center cursor-pointer border border-gray-700 hover:border-neonCyan transition" onclick="hitLon(1)"></div>
+                            <div class="whack-hole h-16 bg-cardBg/80 rounded-lg flex items-center justify-center cursor-pointer border border-gray-700 hover:border-neonCyan transition" onclick="hitLon(2)"></div>
+                            <div class="whack-hole h-16 bg-cardBg/80 rounded-lg flex items-center justify-center cursor-pointer border border-gray-700 hover:border-neonCyan transition" onclick="hitLon(3)"></div>
+                            <div class="whack-hole h-16 bg-cardBg/80 rounded-lg flex items-center justify-center cursor-pointer border border-gray-700 hover:border-neonCyan transition" onclick="hitLon(4)"></div>
+                            <div class="whack-hole h-16 bg-cardBg/80 rounded-lg flex items-center justify-center cursor-pointer border border-gray-700 hover:border-neonCyan transition" onclick="hitLon(5)"></div>
+                        </div>
+                        <button id="startWhackBtn" onclick="startWhackGame()" class="w-full mt-3 py-1.5 bg-neonCyan/20 hover:bg-neonCyan/40 text-neonCyan border border-neonCyan/50 rounded-lg text-xs font-bold transition">
+                            Iniciar Whack-a-Lon
+                        </button>
+                    </div>
+
+                    <!-- GAME 2: DECIBEL KEEP-DOWN -->
+                    <div class="bg-cardBg border border-neonPink/30 rounded-2xl p-5">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-bold text-neonPink text-sm flex items-center gap-1">
+                                <i class="fas fa-wave-square"></i> Control de Decibelios
+                            </h3>
+                            <span id="dbValue" class="text-xs font-bold text-red-400">0 dB</span>
+                        </div>
+                        <p class="text-[11px] text-gray-400 mb-2">¡Lon sube el volumen! Mantén pulsado el freno de ruido para evitar que llegue a 100 dB.</p>
+                        
+                        <!-- Progress meter -->
+                        <div class="w-full bg-darkBg rounded-full h-4 border border-gray-700 overflow-hidden mb-3">
+                            <div id="dbBar" class="bg-gradient-to-r from-green-500 via-yellow-500 to-red-500 h-full w-0 transition-all duration-100"></div>
+                        </div>
+
+                        <button id="holdMuteBtn" class="w-full py-3 bg-red-600/30 hover:bg-red-600/50 border border-red-500/50 text-white rounded-xl text-xs font-bold transition select-none">
+                            <i class="fas fa-compress-alt mr-1"></i> MANTÉN PRESIONADO PARA FRENAR
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ACHIEVEMENTS SECTION -->
+        <section class="my-10 bg-cardBg/60 border border-gray-800 rounded-2xl p-6">
+            <h2 class="text-2xl font-bold font-title text-white mb-4 flex items-center gap-2">
+                <i class="fas fa-trophy text-yellow-400"></i> Logros Desbloqueados
+            </h2>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4" id="achievementsGrid">
+                <!-- Achievements rendered dynamically -->
+            </div>
+        </section>
+
+        <!-- CARD & MEME GENERATOR SECTION -->
+        <section class="my-10 bg-gradient-to-r from-cardBg via-darkBg to-cardBg border border-neonCyan/40 rounded-3xl p-6 sm:p-8 text-center relative overflow-hidden box-glow-cyan">
+            <h2 class="text-3xl font-black font-title text-neonCyan mb-2">
+                CARNET OFICIAL: CIUDADANO LIBRE DE LON
+            </h2>
+            <p class="text-sm text-gray-400 mb-6 max-w-lg mx-auto">
+                Demuestra al mundo tu contribución a la paz acústica. Genera tu credencial certificada y compártela.
+            </p>
+
+            <div class="max-w-md mx-auto bg-gradient-to-br from-gray-900 to-black border-2 border-neonCyan rounded-2xl p-6 text-left relative shadow-2xl" id="citizenCard">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <span class="text-[10px] text-neonCyan font-bold tracking-widest uppercase block">República del Silencio</span>
+                        <h4 class="text-lg font-black text-white">PASE DE PAZ ACÚSTICA</h4>
+                    </div>
+                    <i class="fas fa-id-badge text-3xl text-neonPink"></i>
+                </div>
+                
+                <div class="space-y-2 text-xs mb-4">
+                    <p class="text-gray-400">ID de Héroe: <span id="cardHeroId" class="text-white font-mono">#LON-0000</span></p>
+                    <p class="text-gray-400">Silencios Aplicados: <span id="cardSilences" class="text-neonCyan font-bold">0 dB</span></p>
+                    <p class="text-gray-400">Estado de Lon: <span class="text-green-400 font-bold">SILENCIADO DE POR VIDA</span></p>
+                </div>
+
+                <div class="border-t border-gray-800 pt-3 flex justify-between items-center text-[10px] text-gray-500">
+                    <span>Firma: Anti-Lon Squad</span>
+                    <span class="text-neonPink font-bold">OFICIAL & VERIFICADO</span>
+                </div>
+            </div>
+
+            <div class="mt-6 flex flex-wrap justify-center gap-4">
+                <button onclick="copyShareCard()" class="px-6 py-3 bg-neonCyan text-darkBg hover:bg-white font-bold rounded-xl text-xs transition shadow-lg flex items-center gap-2">
+                    <i class="fas fa-copy"></i> Copiar Estado para Compartir
+                </button>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="text-center py-6 text-xs text-gray-600 border-t border-gray-800/80">
+        <p>© 2026 Instituto Internacional para la Reducción de Ruido de Lon. Ningún Lon fue dañado en la creación de esta página.</p>
+    </footer>
+
+    <!-- JAVASCRIPT CODE ENGINE -->
+    <script>
+        // GLOBAL GAME STATE
+        let state = {
+            silences: 0,
+            sps: 0, // silences per second
+            soundEnabled: true,
+            rankIndex: 0,
+            upgrades: [
+                { id: 'tape', name: 'Cinta Aislante Digital', cost: 15, sps: 1, count: 0, icon: 'fa-tape' },
+                { id: 'megaphone', name: 'Megáfono Inverso', cost: 100, sps: 8, count: 0, icon: 'fa-bullhorn' },
+                { id: 'deafness', name: 'Sordera Selectiva', cost: 500, sps: 30, count: 0, icon: 'fa-deaf' },
+                { id: 'cat', name: 'Gato Que Mira Feo A Lon', cost: 2000, sps: 120, count: 0, icon: 'fa-cat' },
+                { id: 'blackhole', name: 'Agujero Negro Antirruido', cost: 10000, sps: 500, count: 0, icon: 'fa-meteor' }
+            ],
+            achievements: [
+                { id: 'ach1', name: 'Primer Cállate', req: 1, unlocked: false, desc: 'Haz clic 1 vez en el botón' },
+                { id: 'ach2', name: 'Silencio Local', req: 50, unlocked: false, desc: 'Acumula 50 decibelios reducidos' },
+                { id: 'ach3', name: 'Maestro Muteador', req: 500, unlocked: false, desc: 'Acumula 500 decibelios reducidos' },
+                { id: 'ach4', name: 'Lon en Mute Permanente', req: 5000, unlocked: false, desc: 'Alcanza 5,000 decibelios reducidos' }
+            ]
+        };
+
+        const ranks = [
+            "Novato de la Paz",
+            "Inspector de Murmullos",
+            "Bloqueador de Lon",
+            "Destructor de Decibelios",
+            "Guardiana del Silencio Cósmico",
+            "Señor Supremo Mudo"
+        ];
+
+        const funnyPhrases = [
+            "¡Lon intentó hablar y falló rotundamente!",
+            "¡Silencio total alcanzado en un radio de 5km!",
+            "+100 Puntos de Tranquilidad Mental.",
+            "Lon tragó saliva y decidió callarse.",
+            "¡Bloqueo de audio activado con éxito!",
+            "Un gato miró mal a Lon y este guardó silencio.",
+            "¡Onda expansiva de MUTE enviada!"
+        ];
+
+        const conspiracies = [
+            "Lon no habla por voluntad propia: funciona con un motor V8 que produce frases aleatorias.",
+            "Se rumorea que si Lon se calla por 5 minutos seguidos, el continuo espacio-tiempo colapsa.",
+            "Archivos desclasificados confirman que Lon es un experimento acústico de la NASA.",
+            "Lon consume un promedio de 4,000 palabras por minuto solo para mantener su aura verbal.",
+            "La única razón por la que existe la atmósfera es para transmitir las palabras de Lon."
+        ];
+
+        const excuses = [
+            "Lon, hermano, hay un concurso de silencio ahí fuera y vas perdiendo.",
+            "Lon, ¿puedes poner tus cuerdas vocales en modo avión un segundo?",
+            "Lon, el médico dijo que si no te callas 10 minutos se te congela la lengua.",
+            "Lon, tu micrófono interno está acoplando con el universo.",
+            "Lon, por favor, activa el subestreno de tu voz: la opción muda."
+        ];
+
+        const fakeUsers = ["Pedro_AntiNoise", "Clara_Mute", "SilentKing99", "NoMoreLon", "Sofía_Paz", "GatoEnojado", "Carlos_ZeroDB"];
+        const fakeChatPhrases = [
+            "¡Llevo 10 minutos en silencio gracias a este botón!",
+            "Lon intentó hablar hoy en el grupo y le enviamos esta página.",
+            "Compré el Gato que mira feo y funciona de maravilla.",
+            "¡Por fin paz mental en mi vida!",
+            "Lon, si ves esto: por favor, CÁLLATE."
+        ];
+
+        // WEB AUDIO API SYNTHESIZER
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playSound(type) {
+            if (!state.soundEnabled) return;
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(300, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.15);
+                } else if (type === 'buy') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.2);
+                } else if (type === 'whack') {
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.1);
+                }
+            } catch (e) {
+                // Audio context block fallback
+            }
+        }
+
+        // INITIALIZATION
+        window.addEventListener('DOMContentLoaded', () => {
+            renderUpgrades();
+            renderAchievements();
+            generateConspiracy();
+            generateExcuse();
+            initFakeChat();
+
+            // Set random Hero ID
+            document.getElementById('cardHeroId').innerText = `#LON-${Math.floor(1000 + Math.random() * 9000)}`;
+
+            // Main button click handler
+            const bigBtn = document.getElementById('bigSilenceBtn');
+            bigBtn.addEventListener('click', (e) => {
+                addSilence(1);
+                playSound('click');
+                triggerScreenShake();
+                triggerFloatingText(e);
+                triggerRandomPhrase();
+                
+                // Small confetti on big clicks
+                if (Math.random() < 0.2 && typeof confetti === 'function') {
+                    confetti({ particleCount: 25, spread: 60, origin: { y: 0.6 } });
+                }
+            });
+
+            // Audio Toggle
+            document.getElementById('soundToggle').addEventListener('click', () => {
+                state.soundEnabled = !state.soundEnabled;
+                document.getElementById('soundIcon').className = state.soundEnabled ? "fas fa-volume-up text-lg" : "fas fa-volume-mute text-lg text-gray-500";
+                document.getElementById('soundText').innerText = state.soundEnabled ? "AUDIO ON" : "AUDIO OFF";
+            });
+
+            // Game loop for auto SPS
+            setInterval(() => {
+                if (state.sps > 0) {
+                    addSilence(state.sps / 10, false);
+                }
+            }, 100);
+
+            // Decibel keep down mechanics
+            setupDecibelGame();
+        });
+
+        // CORE LOGIC
+        function addSilence(amount, userAction = true) {
+            state.silences += amount;
+            updateUI();
+            checkAchievements();
+        }
+
+        function updateUI() {
+            document.getElementById('silenceCounter').innerText = Math.floor(state.silences).toLocaleString();
+            document.getElementById('cardSilences').innerText = `${Math.floor(state.silences).toLocaleString()} dB`;
+            document.getElementById('spsCount').innerText = state.sps;
+
+            // Update Rank
+            if (state.silences > 5000) state.rankIndex = 5;
+            else if (state.silences > 2000) state.rankIndex = 4;
+            else if (state.silences > 800) state.rankIndex = 3;
+            else if (state.silences > 250) state.rankIndex = 2;
+            else if (state.silences > 50) state.rankIndex = 1;
+            else state.rankIndex = 0;
+
+            document.getElementById('rankTitle').innerText = ranks[state.rankIndex];
+
+            // Update shop button states
+            state.upgrades.forEach(upg => {
+                const btn = document.getElementById(`upg-btn-${upg.id}`);
+                if (btn) {
+                    if (state.silences >= upg.cost) {
+                        btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                        btn.disabled = false;
+                    } else {
+                        btn.classList.add('opacity-50', 'cursor-not-allowed');
+                        btn.disabled = true;
+                    }
+                }
+            });
+        }
+
+        function triggerScreenShake() {
+            document.body.classList.add('shake');
+            setTimeout(() => document.body.classList.remove('shake'), 200);
+        }
+
+        function triggerFloatingText(e) {
+            const container = document.getElementById('clickEffectsContainer');
+            const el = document.createElement('div');
+            el.className = 'absolute text-neonPink font-black font-title text-xl pointer-events-none animate-bounce-short';
+            el.innerText = '¡CÁLLATE! +1';
+            
+            // Position relative to button
+            const rect = container.getBoundingClientRect();
+            const x = (e.clientX || rect.left + rect.width / 2) - rect.left - 40;
+            const y = (e.clientY || rect.top + rect.height / 2) - rect.top - 20;
+
+            el.style.left = `${x}px`;
+            el.style.top = `${y}px`;
+
+            container.appendChild(el);
+            setTimeout(() => el.remove(), 600);
+        }
+
+        function triggerRandomPhrase() {
+            const txt = funnyPhrases[Math.floor(Math.random() * funnyPhrases.length)];
+            document.getElementById('lastActionText').innerText = txt;
+        }
+
+        // UPGRADES SHOP
+        function renderUpgrades() {
+            const list = document.getElementById('upgradesList');
+            list.innerHTML = '';
+
+            state.upgrades.forEach(upg => {
+                const item = document.createElement('div');
+                item.className = 'bg-darkBg/80 p-3 rounded-xl border border-gray-800 flex items-center justify-between gap-3';
+                item.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-neonPurple/20 text-neonCyan flex items-center justify-center text-lg">
+                            <i class="fas ${upg.icon}"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-white">${upg.name}</div>
+                            <div class="text-[10px] text-gray-400">+${upg.sps} dB/s | Poseídos: <span class="text-neonPink font-bold" id="upg-count-${upg.id}">${upg.count}</span></div>
+                        </div>
+                    </div>
+                    <button id="upg-btn-${upg.id}" onclick="buyUpgrade('${upg.id}')" class="px-3 py-1.5 bg-neonPink hover:bg-neonPink/80 text-white font-bold text-xs rounded-lg transition opacity-50 cursor-not-allowed">
+                        <span id="upg-cost-${upg.id}">${upg.cost}</span> dB
+                    </button>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function buyUpgrade(id) {
+            const upg = state.upgrades.find(u => u.id === id);
+            if (upg && state.silences >= upg.cost) {
+                state.silences -= upg.cost;
+                upg.count++;
+                state.sps += upg.sps;
+                upg.cost = Math.floor(upg.cost * 1.5);
+
+                document.getElementById(`upg-count-${upg.id}`).innerText = upg.count;
+                document.getElementById(`upg-cost-${upg.id}`).innerText = upg.cost;
+
+                playSound('buy');
+                updateUI();
+            }
+        }
+
+        // ACHIEVEMENTS
+        function renderAchievements() {
+            const grid = document.getElementById('achievementsGrid');
+            grid.innerHTML = '';
+
+            state.achievements.forEach(ach => {
+                const card = document.createElement('div');
+                card.id = `ach-card-${ach.id}`;
+                card.className = `p-3 rounded-xl border text-center transition ${ach.unlocked ? 'bg-neonPurple/20 border-neonCyan' : 'bg-darkBg/50 border-gray-800 opacity-50'}`;
+                card.innerHTML = `
+                    <i class="fas ${ach.unlocked ? 'fa-check-circle text-neonCyan' : 'fa-lock text-gray-600'} text-2xl mb-1"></i>
+                    <div class="text-xs font-bold text-white">${ach.name}</div>
+                    <div class="text-[10px] text-gray-400 mt-1">${ach.desc}</div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function checkAchievements() {
+            state.achievements.forEach(ach => {
+                if (!ach.unlocked && state.silences >= ach.req) {
+                    ach.unlocked = true;
+                    renderAchievements();
+                    if (typeof confetti === 'function') {
+                        confetti({ particleCount: 50, spread: 80 });
+                    }
+                }
+            });
+        }
+
+        // GENERATORS
+        function generateConspiracy() {
+            const txt = conspiracies[Math.floor(Math.random() * conspiracies.length)];
+            document.getElementById('conspiracyBox').innerText = `"${txt}"`;
+        }
+
+        function generateExcuse() {
+            const txt = excuses[Math.floor(Math.random() * excuses.length)];
+            document.getElementById('excuseBox').innerText = txt;
+        }
+
+        // FAKE LIVE CHAT
+        function initFakeChat() {
+            const box = document.getElementById('chatBox');
+            function addMessage() {
+                const user = fakeUsers[Math.floor(Math.random() * fakeUsers.length)];
+                const msg = fakeChatPhrases[Math.floor(Math.random() * fakeChatPhrases.length)];
+                const p = document.createElement('p');
+                p.innerHTML = `<span class="font-bold text-neonCyan">${user}:</span> ${msg}`;
+                box.appendChild(p);
+                box.scrollTop = box.scrollHeight;
+            }
+            // Add initial messages
+            addMessage();
+            addMessage();
+            setInterval(addMessage, 4500);
+        }
+
+        // RIGHT TAB SWITCHING
+        function switchRightTab(tab) {
+            const shopSec = document.getElementById('shopSection');
+            const gamesSec = document.getElementById('gamesSection');
+            const tabShop = document.getElementById('tabShop');
+            const tabGames = document.getElementById('tabGames');
+
+            if (tab === 'shop') {
+                shopSec.classList.remove('hidden');
+                gamesSec.classList.add('hidden');
+                tabShop.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-neonPurple text-white transition";
+                tabGames.className = "flex-1 py-2 text-xs font-bold rounded-lg text-gray-400 hover:text-white transition";
+            } else {
+                shopSec.classList.add('hidden');
+                gamesSec.classList.remove('hidden');
+                tabGames.className = "flex-1 py-2 text-xs font-bold rounded-lg bg-neonCyan text-darkBg transition";
+                tabShop.className = "flex-1 py-2 text-xs font-bold rounded-lg text-gray-400 hover:text-white transition";
+            }
+        }
+
+        // MINIGAME 1: WHACK A LON
+        let whackScore = 0;
+        let whackActive = false;
+        let activeHole = -1;
+
+        function startWhackGame() {
+            if (whackActive) return;
+            whackActive = true;
+            whackScore = 0;
+            document.getElementById('whackScore').innerText = `Puntos: ${whackScore}`;
+            document.getElementById('startWhackBtn').innerText = "¡Juego en curso!";
+
+            let rounds = 0;
+            const interval = setInterval(() => {
+                clearWhackHoles();
+                activeHole = Math.floor(Math.random() * 6);
+                const hole = document.querySelectorAll('.whack-hole')[activeHole];
+                hole.innerHTML = `<i class="fas fa-user-ninja text-neonPink text-2xl animate-bounce"></i>`;
+
+                rounds++;
+                if (rounds > 15) {
+                    clearInterval(interval);
+                    clearWhackHoles();
+                    whackActive = false;
+                    document.getElementById('startWhackBtn').innerText = "Reiniciar Whack-a-Lon";
+                    addSilence(whackScore * 5);
+                }
+            }, 800);
+        }
+
+        function clearWhackHoles() {
+            document.querySelectorAll('.whack-hole').forEach(h => h.innerHTML = '');
+            activeHole = -1;
+        }
+
+        function hitLon(index) {
+            if (whackActive && index === activeHole) {
+                whackScore += 10;
+                document.getElementById('whackScore').innerText = `Puntos: ${whackScore}`;
+                playSound('whack');
+                clearWhackHoles();
+            }
+        }
+
+        // MINIGAME 2: DECIBEL KEEP DOWN
+        let dbLevel = 0;
+        let isHoldingMute = false;
+
+        function setupDecibelGame() {
+            const btn = document.getElementById('holdMuteBtn');
+
+            const startHold = () => { isHoldingMute = true; btn.classList.add('bg-green-600/50'); };
+            const endHold = () => { isHoldingMute = false; btn.classList.remove('bg-green-600/50'); };
+
+            btn.addEventListener('mousedown', startHold);
+            btn.addEventListener('mouseup', endHold);
+            btn.addEventListener('touchstart', (e) => { e.preventDefault(); startHold(); });
+            btn.addEventListener('touchend', (e) => { e.preventDefault(); endHold(); });
+
+            setInterval(() => {
+                if (isHoldingMute) {
+                    dbLevel = Math.max(0, dbLevel - 3);
+                } else {
+                    dbLevel = Math.min(100, dbLevel + 1.2);
+                }
+
+                document.getElementById('dbValue').innerText = `${Math.floor(dbLevel)} dB`;
+                const bar = document.getElementById('dbBar');
+                bar.style.width = `${dbLevel}%`;
+
+                if (dbLevel >= 100) {
+                    // Lon is too loud penalty
+                    dbLevel = 50;
+                    document.getElementById('lastActionText').innerText = "¡Lon superó los 100 dB y rompió el silencio!";
+                }
+            }, 100);
+        }
+
+        // SHARE CARD COPIER
+        function copyShareCard() {
+            const textToCopy = `¡He logrado reducir ${Math.floor(state.silences)} dB de ruido de Lon! Únete a la causa y haz callar a Lon aquí: ${window.location.href}`;
+            
+            const tempInput = document.createElement("textarea");
+            tempInput.value = textToCopy;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+
+            alert("¡Texto de logro copiado al portapapeles!");
+        }
+    </script>
+</body>
+</html>
