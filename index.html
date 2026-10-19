@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lon, cállate.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bowlby+One&family=Schibsted+Grotesk:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#ffe03d;--ink:#1b25c9;--pop:#1b25c9;--pop-ink:#ffe03d;--mut:#3b44b5;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1033;--ink:#ffe03d;--pop:#ffe03d;--pop-ink:#0e1033;--mut:#d2c987}}
+:root[data-theme="dark"]{--bg:#0e1033;--ink:#ffe03d;--pop:#ffe03d;--pop-ink:#0e1033;--mut:#d2c987}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Schibsted Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
+h1,h2,.n,.shh,.pop{font-family:"Bowlby One","Arial Black",Impact,sans-serif;font-weight:400;margin:0}
+button{font:inherit;color:inherit}
+button:focus-visible,input:focus-visible{outline:3px solid currentColor;outline-offset:3px}
+.tick{background:var(--pop);color:var(--pop-ink);overflow:hidden;white-space:nowrap;padding:9px 0;font-weight:600}
+.tick span{display:inline-block;padding-left:100%;animation:mq 80s linear infinite}
+@keyframes mq{to{transform:translateX(-100%)}}
+main{max-width:880px;margin:0 auto;padding:0 18px 40px}
+h1{font-size:clamp(68px,21vw,190px);line-height:.88;letter-spacing:-.03em;padding:34px 0 10px}
+.sub{max-width:520px;color:var(--mut);margin:8px 0 28px}
+h2{font-size:clamp(28px,6.5vw,44px);line-height:1.05;margin:0 0 14px}
+section{border-top:3px solid var(--ink);padding:26px 0 30px}
+.game{background:var(--pop);color:var(--pop-ink);border-radius:30px;padding:22px 18px;text-align:center;position:relative;overflow:hidden;margin-bottom:30px}
+.lon{font-size:88px;line-height:1.1}
+.bub{display:inline-block;background:var(--pop-ink);color:var(--pop);border-radius:16px;padding:6px 14px;margin:6px 0 16px;min-height:36px}
+.meter{height:24px;border:3px solid var(--pop-ink);border-radius:99px;overflow:hidden}
+.meter i{display:block;height:100%;width:0;background:var(--pop-ink);transition:width .1s}
+.shh{display:block;width:100%;margin:16px 0 12px;padding:16px;font-size:clamp(30px,8vw,52px);background:var(--pop-ink);color:var(--pop);border:0;border-radius:22px;box-shadow:0 7px 0 rgba(0,0,0,.35);cursor:pointer}
+.shh:active{transform:translateY(6px);box-shadow:0 1px 0 rgba(0,0,0,.35)}
+.row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;align-items:center}
+.chip{background:none;border:2px solid currentColor;border-radius:99px;padding:4px 14px;cursor:pointer}
+.hint{font-size:14px;opacity:.8;margin:12px 0 0}
+.pop{position:absolute;left:50%;bottom:40%;font-size:26px;pointer-events:none;animation:up .9s forwards}
+@keyframes up{to{transform:translateY(-140px) rotate(-8deg);opacity:0}}
+.shake{animation:sh .25s}
+@keyframes sh{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;padding:0;margin:0;list-style:none}
+.ach{border:2px dashed var(--mut);border-radius:12px;padding:10px;opacity:.55;filter:grayscale(1)}
+.ach.on{opacity:1;filter:none;border:2px solid var(--ink);background:var(--pop);color:var(--pop-ink)}
+.ach span{display:block;font-size:28px}
+.q{font-size:21px;min-height:68px;margin:0 0 12px;max-width:640px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:22px}
+.stats div{border-left:3px solid var(--ink);padding-left:14px}
+.n{display:block;font-size:clamp(40px,11vw,60px);line-height:1}
+input[type=range]{width:100%;accent-color:var(--ink)}
+.lang{display:flex;justify-content:space-between;align-items:baseline;gap:12px;width:100%;background:none;border:0;border-bottom:2px solid var(--ink);padding:12px 2px;font-size:20px;font-weight:800;text-align:left;cursor:pointer}
+.lang small{color:var(--mut);font-size:15px;font-weight:400}
+.lang:hover{background:var(--pop);color:var(--pop-ink);padding-left:12px}
+.lang:hover small{color:inherit}
+#toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translate(-50%,200%);background:var(--pop);color:var(--pop-ink);padding:10px 18px;border-radius:14px;font-weight:600;transition:transform .25s;z-index:9;max-width:90vw;text-align:center}
+#toast.show{transform:translate(-50%,0)}
+footer{color:var(--mut);padding:10px 18px 36px;max-width:880px;margin:0 auto}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="tick" aria-hidden="true"><span id="tk"></span></div>
+<main>
+<h1>Lon,<br>cállate.</h1>
+<p class="sub">Una web con una sola frase. Como Lon nunca se conforma con una sola frase, le hemos añadido contenido.</p>
+
+<div class="game" id="box">
+<div class="lon" id="lon">😶</div>
+<div class="bub" id="bub" aria-live="polite">Es que yo solo digo que…</div>
+<div class="meter"><i id="bar"></i></div>
+<p>Nivel de charla de Lon: <b id="pct">30</b>% · Aguantas: <b id="now">0</b> s</p>
+<button class="shh" id="btn">¡Lon, cállate!</button>
+<div class="row"><span>Cállates: <b id="cnt">0</b></span><span>Récord: <b id="best">0 s</b></span><button class="chip" id="snd">🔊 Sonido</button></div>
+<p class="hint">Pulsa sin parar o usa la barra espaciadora. Si la barra llega al 100%, gana Lon.</p>
+</div>
+
+<section>
+<h2>Logros desbloqueables</h2>
+<ul class="grid" id="ach"></ul>
+</section>
+
+<section>
+<h2>Lo que Lon diría ahora mismo</h2>
+<p class="q" id="q"></p>
+<button class="chip" id="gen">🎲 Otra frase de Lon</button>
+</section>
+
+<section>
+<h2>Calculadora de cállates</h2>
+<label for="min">Lon lleva hablando <b id="mv">10</b> minutos</label>
+<input type="range" id="min" min="1" max="180" value="10">
+<p class="q"><b id="nc"></b> <span id="vd"></span></p>
+</section>
+
+<section>
+<h2>Estadísticas inventadas (pero creíbles)</h2>
+<div class="stats">
+<div><b class="n">87%</b>de las conversaciones mejoran en cuanto Lon respira.</div>
+<div><b class="n">3 min</b>es lo que dura «una cosita nada más».</div>
+<div><b class="n">0</b>veces que Lon se ha callado a la primera.</div>
+</div>
+</section>
+
+<section>
+<h2>Cállate en 8 idiomas</h2>
+<p class="sub" style="margin-top:0">Toca una frase y tu navegador la dirá en voz alta.</p>
+<div id="lg"></div>
+</section>
+
+<section>
+<button class="chip" id="sh">📩 Mándaselo a Lon</button>
+</section>
+</main>
+<footer>Es de broma, Lon. Te queremos. Pero cállate un poquito.</footer>
+<div id="toast" role="status"></div>
+
+<script>
+(()=>{
+const $=i=>document.getElementById(i),pick=a=>a[Math.random()*a.length|0],K="lon-callate-1";
+let S={c:0,b:0,a:[]};
+try{Object.assign(S,JSON.parse(localStorage.getItem(K)||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+let tt;const toast=m=>{const t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(tt);tt=setTimeout(()=>t.classList.remove("show"),2400)};
+
+$("tk").textContent=["Última hora: Lon empieza con «una cosita nada más» y aún no ha terminado","Estudio inventado: el 100% de los silencios incómodos son porque Lon piensa qué decir","Expertos recomiendan «cállate» como alternativa a «cuéntame más»","Lon bate su récord personal: 14 minutos sin respirar","Se busca botón de silenciar para Lon. Urgente. Recompensa: paz","El silencio pide a Lon que le deje un hueco en la conversación"].join("   ✦   ");
+
+const lon=$("lon"),bub=$("bub"),bar=$("bar"),pct=$("pct"),now=$("now"),cnt=$("cnt"),best=$("best"),box=$("box");
+let talk=30,t0=0,run=false,snd=true,ac;
+const faces=[[20,"🤐"],[45,"😶"],[70,"🗣️"],[90,"📢"],[101,"🤯"]];
+const A=[["c",1,"Primer cállate","🤫"],["c",10,"Aprendiz del silencio","🧘"],["c",50,"Domador de Lons","🦁"],["c",250,"Lon se ha mudado al campo","🌲"],["s",30,"30 s de paz","☮️"],["s",90,"Maestro zen","🏔️"]];
+const secs=()=>run?(Date.now()-t0)/1000:0;
+function draw(){bar.style.width=Math.min(talk,100)+"%";pct.textContent=Math.round(talk);lon.textContent=faces.find(f=>talk<f[0])[1];cnt.textContent=S.c;best.textContent=S.b+" s";now.textContent=Math.floor(secs())}
+function ach(){$("ach").innerHTML=A.map(([k,n,name,ico])=>`<li class="ach${S.a.includes(k+n)?" on":""}"><span>${ico}</span>${name}</li>`).join("")}
+function unlock(){A.forEach(([k,n,name,ico])=>{const id=k+n;if(!S.a.includes(id)&&(k=="c"?S.c>=n:secs()>=n)){S.a.push(id);save();toast("Logro: "+name+" "+ico);ach()}})}
+function shh(){if(!snd)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();const n=ac.sampleRate*.3,b=ac.createBuffer(1,n,ac.sampleRate),d=b.getChannelData(0);for(let i=0;i<n;i++)d[i]=(Math.random()*2-1)*(1-i/n);const s=ac.createBufferSource(),f=ac.createBiquadFilter(),g=ac.createGain();s.buffer=b;f.type="bandpass";f.frequency.value=4500;g.gain.value=.3;s.connect(f);f.connect(g);g.connect(ac.destination);s.start()}catch(e){}}
+function hit(){
+if(!run){run=true;t0=Date.now();talk=30}
+talk=Math.max(0,talk-9);S.c++;save();shh();
+bub.textContent=pick(["Pero si yo solo…","Vale, vale…","Una cosita nada más…","Me callo, me callo… (mentira)","Es que eso no es así…","¿Puedo terminar la frase?","mmmf mmmf mmmf","Esto es censura."]);
+const p=document.createElement("span");p.className="pop";p.textContent=pick(["¡Shhh!","¡Calla!","🤫","¡Silencio!","¡Ya!"]);p.style.marginLeft=(Math.random()*160-80)+"px";box.appendChild(p);setTimeout(()=>p.remove(),900);
+box.classList.remove("shake");void box.offsetWidth;box.classList.add("shake");
+draw();unlock()}
+setInterval(()=>{
+if(!run)return;
+const s=secs();talk+=(6+s/4)/10;
+if(talk>=100){run=false;talk=100;const r=Math.floor(s);if(r>S.b){S.b=r;save()}draw();now.textContent=r;bub.textContent="¡Lon ha hablado! Aguantaste "+r+" s.";toast("Lon gana esta ronda. Pulsa para la revancha.");return}
+draw();unlock()},100);
+$("btn").onclick=hit;
+$("snd").onclick=e=>{snd=!snd;e.currentTarget.textContent=snd?"🔊 Sonido":"🔇 Mudo"};
+addEventListener("keydown",e=>{if(e.code=="Space"&&!/^(INPUT|BUTTON)$/.test(document.activeElement.tagName)){e.preventDefault();hit()}});
+
+const gen=()=>{$("q").innerHTML="«"+pick(["Una cosa que no sabíais:","Yo es que ya lo dije en 2019:","No, pero escuchad:","Con todo el respeto:","Os cuento rápido:"])+" "+pick(["los atascos","por qué el pan de antes sabía mejor","un documental que vi a medias","mi primo, que sabe de todo","montar un armario sin instrucciones","los pájaros, que no existen","a qué hora se debería cenar","cómo se hace de verdad una tortilla"])+pick([". Y ahí lo dejo (mentira).",". Y eso es solo el principio.",". Y no me interrumpáis.",". Esta es la versión corta.",". Luego dicen que hablo mucho."])+"»<br><b>Lon, cállate.</b>"};
+$("gen").onclick=gen;gen();
+
+const V=[[5,"Zona segura. Casi no ha hablado."],[20,"Charla de ascensor. Vale con un cállate suave."],[60,"Monólogo en curso. Toca firmeza."],[120,"Esto ya es una charla TED sin invitación."],[999,"Esto ya es una serie de Netflix. Cállate sin descuento."]];
+const calc=()=>{const m=+$("min").value;$("mv").textContent=m;$("nc").textContent="Cállates recomendados: "+Math.ceil(m/4)+".";$("vd").textContent=V.find(v=>m<v[0])[1]};
+$("min").oninput=calc;calc();
+
+const L=[["Español","Lon, cállate","es-ES"],["Inglés","Lon, shut up","en-GB"],["Catalán","Lon, calla","ca-ES"],["Francés","Lon, tais-toi","fr-FR"],["Alemán","Lon, halt den Mund","de-DE"],["Italiano","Lon, zitto","it-IT"],["Portugués","Lon, cala a boca","pt-PT"],["Japonés","ロン、黙れ","ja-JP"]];
+$("lg").innerHTML=L.map((l,i)=>`<button class="lang" data-i="${i}">${l[1]}<small>${l[0]}</small></button>`).join("");
+$("lg").onclick=e=>{const b=e.target.closest(".lang");if(!b)return;const l=L[b.dataset.i];try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(l[1]);u.lang=l[2];speechSynthesis.speak(u)}catch(x){toast("Tu navegador no sabe hablar. Aprende de él, Lon.")}};
+
+$("sh").onclick=async()=>{const d={title:"Lon, cállate.",text:"Lon, cállate. (Con cariño.) 🤫",url:location.href};try{if(navigator.share){await navigator.share(d)}else{await navigator.clipboard.writeText(d.url);toast("Enlace copiado. Pásaselo a Lon.")}}catch(e){if(e.name!="AbortError")toast("No se pudo compartir. Copia el enlace a mano.")}};
+
+ach();draw();
+})();
+</script>
+</body>
+</html>
